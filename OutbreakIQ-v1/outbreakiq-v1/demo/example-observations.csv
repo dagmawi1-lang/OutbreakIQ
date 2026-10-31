@@ -1,0 +1,6 @@
+disease,location,mmwr_year,mmwr_week,current_week
+Synthetic Example A,Virginia,2025,1,5
+Synthetic Example A,Virginia,2025,2,6
+Synthetic Example A,Virginia,2025,3,4
+Synthetic Example A,Virginia,2025,4,7
+Synthetic Example A,Virginia,2025,5,28
