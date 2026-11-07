@@ -1,0 +1,29 @@
+{
+  "name": "outbreakiq",
+  "private": true,
+  "version": "0.3.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "server": "node server/server.js",
+    "start": "node server/server.js",
+    "build": "vite build",
+    "test": "node --test server/*.test.js",
+    "check": "node --check server/server.js && node --check server/analysis.js && node --test server/*.test.js",
+    "verify:cdc": "node scripts/verify-cdc.mjs"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "lucide-react": "^0.548.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-leaflet": "^5.0.0",
+    "leaflet": "^1.9.4",
+    "recharts": "^2.15.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.4",
+    "vite": "^7.1.12"
+  },
+  "license": "MIT"
+}

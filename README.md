@@ -1,201 +1,67 @@
 # OutbreakIQ 🧬
-### AI-Assisted Public Health Surveillance & Disease Trend Analysis
 
-**Turning public health data into accessible intelligence.**
+## AI-assisted public-health surveillance and disease-trend exploration
 
-OutbreakIQ is an AI-assisted public health surveillance platform designed to help users explore infectious disease reporting patterns, identify unusual statistical changes, and better understand public health trends through interactive data visualization and analysis.
+OutbreakIQ is a student-built platform for exploring public disease-reporting data, identifying unusual reporting patterns, and explaining the evidence behind those patterns.
 
-Developed for **DSH Hacks V2 – AI x Healthcare**.
+> **An anomaly is a statistical signal for human review. It is not proof of an outbreak, a diagnosis, or a causal explanation.**
 
----
+### Core capabilities
+- Interactive disease-reporting dashboard and filters
+- Weekly trend visualization and geographic exploration
+- Rolling-baseline statistical anomaly screening
+- CSV import/export
+- CDC NNDSS data connector and synthetic demo data
+- Evidence-grounded explanations, with responsible-AI limitations
 
-## 🌍 Project Overview
+### Statistical screening
+For a current observation `x`, historical mean `μ`, and historical standard deviation `σ`, the prototype uses a standardized deviation:
 
-Public health organizations collect enormous amounts of disease-related information. However, exploring this information, identifying unusual reporting patterns, and communicating findings can be challenging.
+`z = (x - μ) / σ`
 
-OutbreakIQ aims to simplify this process by combining public health datasets, statistical anomaly detection, geographic visualization, and AI-assisted explanations into one interactive platform.
+The rolling baseline uses recent prior observations and requires a minimum history. A high score is a prompt for review, not an outbreak confirmation. Reporting delays, revisions, seasonality, surveillance changes, missing data, and random variation can all affect results.
 
-Rather than simply displaying statistics, OutbreakIQ helps users investigate what the data shows and understand why certain observations may deserve additional attention.
+### Data
+The live connector is designed around [CDC NNDSS Weekly Data](https://data.cdc.gov/d/x9gk-5huc). Bundled demo observations are synthetic and must not be described as real case reports.
 
-## ✨ Key Features
-
-### 📊 Interactive Intelligence Dashboard
-- Explore infectious disease reporting statistics.
-- View historical reporting trends.
-- Filter observations by disease and geographic area.
-- Review detected statistical anomalies.
-
-### 🗺️ Geographic Disease Surveillance
-- Explore geographic disease-reporting patterns.
-- Visualize reporting differences across locations.
-- Investigate regional trends.
-
-### 🧠 Statistical Anomaly Detection
-- Analyze historical reporting patterns.
-- Calculate rolling statistical baselines.
-- Identify unusually high observations.
-- Generate anomaly scores for further investigation.
-
-### 🤖 AI-Assisted Explanations
-- Explain unusual statistical observations.
-- Summarize available reporting information.
-- Help users interpret historical patterns.
-- Provide context about data limitations.
-
-### 📁 Data Management
-- Retrieve public health reporting data.
-- Import CSV datasets.
-- Export observations for additional analysis.
-
-## 🛠️ Technology Stack
-
-| Technology | Purpose |
-|---|---|
-| React | Frontend interface |
-| Vite | Development environment |
-| JavaScript | Application logic |
-| Node.js | Backend runtime |
-| Express.js | API development |
-| Python | Planned advanced data analysis |
-| Statistical Analysis | Anomaly detection |
-| Leaflet | Geographic visualization |
-| Git & GitHub | Version control |
-
-## 🏗️ Project Structure
-
-```text
-OutbreakIQ/
-│
-├── src/
-│   ├── components/
-│   ├── data/
-│   ├── App.jsx
-│   └── main.jsx
-│
-├── server/
-│   ├── server.js
-│   ├── analysis.js
-│   └── server.test.js
-│
-├── docs/
-│
-├── public/
-│
-├── package.json
-├── vite.config.js
-└── README.md
-```
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js (LTS recommended)
-- npm
-- Git
-
-### Installation
-
-Clone the repository:
-
-```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-```
-
-Navigate into the project:
-
-```bash
-cd OutbreakIQ
-```
-
-Install dependencies:
-
+### Run locally
 ```bash
 npm install
-```
-
-Start the development environment:
-
-```bash
 npm run dev
 ```
+In another terminal:
+```bash
+npm run server
+```
+Build and run checks:
+```bash
+npm run build
+npm run check
+npm run verify:cdc   # confirms the live CDC schema still matches (needs internet)
+```
+Production-style run: `npm run build && npm start`, then open http://localhost:3001 (the API also serves `dist/`).
 
-Follow the terminal instructions to open the application in your browser.
+See `VERSION.md` for the 0.3.0 changes and verification status.
+If a script name differs in your local copy, use the scripts listed by `npm run`.
 
-### Backend
+### Optional AI configuration
+If the optional AI provider integration is enabled in this version, configure credentials locally using environment variables. Never commit API keys or secrets.
 
-Navigate into the server directory if it has a separate package configuration, install its dependencies, and follow the server startup instructions in the project documentation.
+### Responsible use
+OutbreakIQ is an educational prototype. It does not diagnose, recommend treatment, confirm outbreaks, predict individual health outcomes, or replace public-health professionals. Geographic views are exploratory, not individual or neighborhood risk assessments. Verify important findings with authoritative sources.
 
-## 📚 Data Sources
+### Competition
+**DSH Hacks V2 — AI × Healthcare**
 
-OutbreakIQ is designed to work with publicly available public health information.
+See `docs/METHODOLOGY.md` and `docs/RELEASE_CHECKLIST.md` for interpretation and release preparation.
 
-Primary intended source:
+### License
+See `LICENSE`.
 
-- [CDC National Notifiable Diseases Surveillance System (NNDSS)](https://data.cdc.gov/d/x9gk-5huc)
+## License
 
-Additional potential sources:
+[MIT](LICENSE) © 2026 Dagmawi Melaku
 
-- [Centers for Disease Control and Prevention](https://www.cdc.gov/)
-- [World Health Organization](https://www.who.int/)
-- [WHO Global Health Observatory](https://www.who.int/data/gho)
+## Earlier versions
 
-Data availability, reporting periods, and geographic coverage may vary.
-
-## 🔬 How Anomaly Detection Works
-
-OutbreakIQ uses historical observations to establish a statistical baseline.
-
-The current screening approach uses rolling averages and standard deviations to identify observations that differ substantially from historical patterns.
-
-An anomaly is a statistical signal, not proof of an outbreak.
-
-Future development may incorporate more advanced machine learning techniques and additional historical datasets.
-
-## 🔒 Responsible AI & Data Limitations
-
-OutbreakIQ is an exploratory public health data analysis platform.
-
-It is not intended to:
-
-- Diagnose medical conditions.
-- Replace healthcare professionals.
-- Confirm disease outbreaks.
-- Provide emergency medical guidance.
-- Predict individual patient outcomes.
-
-Public health reporting data can be provisional, incomplete, or subject to revision. All detected anomalies should be independently reviewed before drawing conclusions.
-
-Synthetic demonstration data, where used, should not be interpreted as actual reported disease cases.
-
-## 🛣️ Future Development
-
-Planned improvements include:
-
-- Expanded international disease surveillance.
-- Advanced machine learning models.
-- Improved geographic intelligence.
-- Historical anomaly comparisons.
-- More sophisticated trend analysis.
-- Enhanced AI-powered research assistance.
-- Additional public health data integrations.
-
-## 🎯 Competition
-
-**DSH Hacks V2**
-
-Theme: AI x Healthcare
-
-OutbreakIQ was developed to explore how artificial intelligence, data science, and software engineering can contribute to making public health information more accessible and understandable.
-
-## 👨‍💻 Developer
-
-Independently developed as a student engineering project.
-
-## 📄 License
-
-Released under the MIT License. See [LICENSE](LICENSE) for details.
-
----
-
-**OutbreakIQ — Making public health data easier to explore, understand, and investigate.**
+Previous uploads of this project are kept unchanged in [`archive/`](archive/).
