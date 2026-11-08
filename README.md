@@ -2,6 +2,13 @@
 
 ## AI-assisted public-health surveillance and disease-trend exploration
 
+## My role & contributions
+
+**Solo developer · AI-assisted**
+
+- Chose the CDC NNDSS dataset and the statistical screening approach
+- Fixed the live-data column mapping and double counting of national totals
+
 OutbreakIQ is a student-built platform for exploring public disease-reporting data, identifying unusual reporting patterns, and explaining the evidence behind those patterns.
 
 > **An anomaly is a statistical signal for human review. It is not proof of an outbreak, a diagnosis, or a causal explanation.**
