@@ -1,6 +1,6 @@
 # OutbreakIQ 🧬
 
-## AI-assisted public-health surveillance and disease-trend exploration
+## Public-health surveillance and disease-trend exploration, with a built-in AI assistant
 
 ## My role & contributions
 
