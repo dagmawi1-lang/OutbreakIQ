@@ -1,4 +1,4 @@
-# V1 test plan
+# Test plan
 
 ## Automated checks
 
@@ -7,7 +7,7 @@
 - Rows missing core fields are rejected.
 - A large observation relative to its rolling history is flagged by the baseline detector.
 
-## Manual browser checks before submission
+## Manual browser checks
 
 1. Start the server and Vite dev process.
 2. Confirm the dashboard loads in demo mode and clearly identifies synthetic data.

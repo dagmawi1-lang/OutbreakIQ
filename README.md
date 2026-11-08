@@ -1,6 +1,10 @@
-# OutbreakIQ 🧬
+# OutbreakIQ
 
-## Public-health surveillance and disease-trend exploration, with a built-in AI assistant
+**Explore public disease-reporting data and spot unusual patterns, with the evidence shown.** OutbreakIQ is a public-health surveillance dashboard. It loads CDC weekly disease data, screens it for statistically unusual reports, and includes an assistant that explains each signal using only the data on screen.
+
+Built for [DSH Hacks V2](https://dsh-hacks-v2.devpost.com/) (AI × Healthcare).
+
+> An anomaly is a statistical signal for human review. It is not proof of an outbreak, a diagnosis, or a causal explanation.
 
 ## My role & contributions
 
@@ -9,66 +13,53 @@
 - Chose the CDC NNDSS dataset and the statistical screening approach
 - Fixed the live-data column mapping and double counting of national totals
 
-OutbreakIQ is a student-built platform for exploring public disease-reporting data, identifying unusual reporting patterns, and explaining the evidence behind those patterns.
+## Features
 
-> **An anomaly is a statistical signal for human review. It is not proof of an outbreak, a diagnosis, or a causal explanation.**
+- **Dashboard** with condition, reporting-area, and time-window filters, a weekly trend chart, and a map.
+- **Anomaly screening** with a rolling baseline and a minimum-history requirement.
+- **Live CDC data** from the [NNDSS Weekly Data](https://data.cdc.gov/d/x9gk-5huc) catalog, proxied and cached by the API. National and regional total rows are kept out of "All locations" totals so nothing is counted twice.
+- **Explanation assistant** grounded in the visible data. It uses an OpenAI-compatible model when a key is configured, and a built-in explanation otherwise.
+- **CSV import and export.** Imported rows are validated and normalized, and skipped rows are reported by line number.
+- **Demo mode** with clearly labeled synthetic data, so the app works offline.
+- A methodology panel that explains how scores are calculated and their limits.
 
-### Core capabilities
-- Interactive disease-reporting dashboard and filters
-- Weekly trend visualization and geographic exploration
-- Rolling-baseline statistical anomaly screening
-- CSV import/export
-- CDC NNDSS data connector and synthetic demo data
-- Evidence-grounded explanations, with responsible-AI limitations
+## How anomalies are scored
 
-### Statistical screening
-For a current observation `x`, historical mean `μ`, and historical standard deviation `σ`, the prototype uses a standardized deviation:
+For a current weekly count `x`, with mean `μ` and standard deviation `σ` over recent prior weeks:
 
-`z = (x - μ) / σ`
+```
+z = (x − μ) / σ
+```
 
-The rolling baseline uses recent prior observations and requires a minimum history. A high score is a prompt for review, not an outbreak confirmation. Reporting delays, revisions, seasonality, surveillance changes, missing data, and random variation can all affect results.
+A high score flags the observation for review. Reporting delays, data revisions, seasonality, and changes in surveillance can all produce high scores, so they are explained alongside each result. See [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md) and [`docs/DATA_AND_METHODS.md`](docs/DATA_AND_METHODS.md).
 
-### Data
-The live connector is designed around [CDC NNDSS Weekly Data](https://data.cdc.gov/d/x9gk-5huc). Bundled demo observations are synthetic and must not be described as real case reports.
+## Tech stack
 
-### Run locally
+React · Vite · Recharts · Leaflet · Node.js · Express
+
+## Getting started
+
 ```bash
 npm install
-npm run dev
+npm run dev        # frontend
+npm run server     # API on http://localhost:3001 (second terminal)
 ```
-In another terminal:
+
+Production-style run on one port: `npm run build && npm start`, then open http://localhost:3001.
+
+To turn on the AI assistant, copy `.env.example` to `.env` and set `OPENAI_API_KEY` (and optionally `OPENAI_MODEL` and `OPENAI_BASE_URL`). The key stays on the server.
+
+## Testing
+
 ```bash
-npm run server
+npm run check        # server syntax checks and tests
+npm run verify:cdc   # checks the live CDC schema against the field mapping (needs internet)
 ```
-Build and run checks:
-```bash
-npm run build
-npm run check
-npm run verify:cdc   # confirms the live CDC schema still matches (needs internet)
-```
-Production-style run: `npm run build && npm start`, then open http://localhost:3001 (the API also serves `dist/`).
 
-See `VERSION.md` for the 0.3.0 changes and verification status.
-If a script name differs in your local copy, use the scripts listed by `npm run`.
+## Responsible use
 
-### Optional AI configuration
-If the optional AI provider integration is enabled in this version, configure credentials locally using environment variables. Never commit API keys or secrets.
-
-### Responsible use
-OutbreakIQ is an educational prototype. It does not diagnose, recommend treatment, confirm outbreaks, predict individual health outcomes, or replace public-health professionals. Geographic views are exploratory, not individual or neighborhood risk assessments. Verify important findings with authoritative sources.
-
-### Competition
-**DSH Hacks V2 — AI × Healthcare**
-
-See `docs/METHODOLOGY.md` and `docs/RELEASE_CHECKLIST.md` for interpretation and release preparation.
-
-### License
-See `LICENSE`.
+OutbreakIQ is an exploration tool. It doesn't diagnose, recommend treatment, confirm outbreaks, or assess individual or neighborhood risk. Important findings should be checked against official public-health sources.
 
 ## License
 
 **Permission required.** © 2026 Dagmawi Melaku. You need my written permission before using, copying, or modifying this code, and any approved use must credit me with a link to this repository. Viewing, forking on GitHub, and running it to judge or review a submission are allowed without asking. To ask, [open an issue](../../issues/new). See [LICENSE](LICENSE) for the full terms.
-
-## Earlier versions
-
-Previous uploads of this project are kept unchanged in [`archive/`](archive/).
